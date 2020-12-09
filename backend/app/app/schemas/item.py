@@ -1,3 +1,4 @@
+import uuid
 from typing import Optional
 
 from pydantic import BaseModel
@@ -21,7 +22,7 @@ class ItemUpdate(ItemBase):
 
 # Properties shared by models stored in DB
 class ItemInDBBase(ItemBase):
-    id: int
+    id: uuid.UUID
     title: str
     owner_id: int
 
