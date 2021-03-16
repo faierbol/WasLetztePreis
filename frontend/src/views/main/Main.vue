@@ -3,6 +3,15 @@
     <v-navigation-drawer persistent :mini-variant="miniDrawer" v-model="showDrawer" fixed app>
       <v-layout column fill-height>
         <v-list>
+          <v-subheader>Adverts</v-subheader>
+          <v-list-tile to="/main/adverts/all">
+            <v-list-tile-action>
+              <v-icon>web</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Advert List</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
           <v-subheader>Main menu</v-subheader>
           <v-list-tile to="/main/dashboard">
             <v-list-tile-action>
@@ -81,7 +90,8 @@
     </v-navigation-drawer>
     <v-toolbar dark color="primary" app>
       <v-toolbar-side-icon @click.stop="switchShowDrawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="appName"></v-toolbar-title>
+      <v-img src="https://i.imgur.com/MykLy7K.png" max-height="80" max-width="200"/>
+<!--      <v-toolbar-title v-text="appName"></v-toolbar-title>-->
       <v-spacer></v-spacer>
       <v-menu bottom left offset-y>
         <v-btn slot="activator" icon>

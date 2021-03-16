@@ -21,3 +21,38 @@ export interface IUserProfileCreate {
     is_active?: boolean;
     is_superuser?: boolean;
 }
+
+export interface IAdvert {
+    title: string;
+    description: string;
+    price: number;
+    location: string;
+    category: string;
+    inactive: boolean;
+    rating: number;
+    image_link: string;
+    owner_id: number;
+    id: number;
+}
+
+export interface IAdvertUpdate {
+    title?: string;
+    description?: string;
+    price?: number;
+    location?: string;
+    category?: string;
+    inactive?: boolean;
+    rating?: number;
+    image_link?: string;
+}
+
+export interface IAdvertCreate {
+    title: string;
+    description?: string;
+    price: number;
+    location?: string;
+    category?: string;
+    inactive?: boolean;
+    rating?: number;
+    image_link?: string;
+}

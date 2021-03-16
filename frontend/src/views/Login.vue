@@ -5,7 +5,7 @@
         <v-flex xs12 sm8 md4>
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
-              <v-toolbar-title>{{appName}}</v-toolbar-title>
+              <v-img src="https://i.imgur.com/MykLy7K.png" max-height="80" max-width="200"/>
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>

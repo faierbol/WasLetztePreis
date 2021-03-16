@@ -86,6 +86,36 @@ export default new Router({
                 },
               ],
             },
+            {
+              path: 'adverts',
+              component: RouterComponent,
+              redirect: 'adverts/all',
+              children: [
+                {
+                  path: 'all',
+                  component: () => import(
+                    /* webpackChunkName: "main-adverts" */ './views/main/advert/Adverts.vue'),
+                },
+                {
+                  path: 'detail/:id',
+                  name: 'main-adverts-detail',
+                  component: () => import(
+                    /* webpackChunkName: "main-adverts-detail" */ './views/main/advert/DetailAdvert.vue'),
+                },
+                {
+                  path: 'edit/:id',
+                  name: 'main-adverts-edit',
+                  component: () => import(
+                    /* webpackChunkName: "main-adverts-edit" */ './views/main/advert/EditAdvert.vue'),
+                },
+                {
+                  path: 'create',
+                  name: 'main-adverts-create',
+                  component: () => import(
+                    /* webpackChunkName: "main-adverts-create" */ './views/main/advert/CreateAdvert.vue'),
+                },
+              ],
+            },
           ],
         },
       ],
