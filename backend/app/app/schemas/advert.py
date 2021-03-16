@@ -11,6 +11,8 @@ class AdvertBase(BaseModel):
     location: str = None
     category: str = None
     inactive: bool = False
+    rating: int = None
+    image_link: str = None
 
 # Properties to receive on advert creation
 class AdvertCreate(AdvertBase):
@@ -20,6 +22,8 @@ class AdvertCreate(AdvertBase):
     location: str
     category: str
     inactive: bool
+    rating: int
+    image_link: str
 
 # Properties to receive on advert update
 class AdvertUpdate(AdvertBase):
@@ -29,6 +33,8 @@ class AdvertUpdate(AdvertBase):
     location: Optional[str]
     category: Optional[str]
     inactive: Optional[str]
+    rating: Optional[int]
+    image_link: Optional[str]
 
 
 # Properties shared by models stored in DB
@@ -40,6 +46,8 @@ class AdvertInDBBase(AdvertBase):
     location: str
     category: str
     inactive: bool
+    rating: int
+    image_link: str
     owner_id: int
 
     class Config:

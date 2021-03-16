@@ -17,5 +17,7 @@ class Advert(Base):
     location = Column(String)
     category = Column(String)
     inactive = Column(Boolean, default=False)
+    rating = Column(Integer, default=0)
+    image_link = Column(String)
     owner_id = Column(Integer, ForeignKey("user.id"))
     owner = relationship("User", back_populates="adverts")

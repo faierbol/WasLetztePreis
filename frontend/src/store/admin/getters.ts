@@ -6,6 +6,7 @@ export const getters = {
     adminUsers: (state: AdminState) => state.users,
     adminOneUser: (state: AdminState) => (userId: number) => {
         const filteredUsers = state.users.filter((user) => user.id === userId);
+        console.log(filteredUsers);
         if (filteredUsers.length > 0) {
             return { ...filteredUsers[0] };
         }
