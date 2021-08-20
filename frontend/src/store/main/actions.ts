@@ -14,6 +14,9 @@ import {
     commitSetUserProfile,
 } from './mutations';
 import { AppNotification, MainState } from './state';
+import {commitSetAdvert, commitSetAdverts} from "@/store/main/mutations";
+import {IAdvertCreate, IAdvertUpdate} from "@/interfaces";
+import {commitSetUsers} from "@/store/main/mutations";
 
 type MainContext = ActionContext<MainState, State>;
 
@@ -154,6 +157,56 @@ export const actions = {
             commitAddNotification(context, { color: 'error', content: 'Error resetting password' });
         }
     },
+    async actionGetAdverts(context: MainContext) {
+        try {
+            const response = await api.getAdverts(context.rootState.main.token);
+            if (response) {
+                commitSetAdverts(context, response.data);
+            }
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
+    async actionUpdateAdvert(context: MainContext, payload: { id: number, advert: IAdvertUpdate }) {
+        try {
+            const loadingNotification = { content: 'saving', showProgress: true };
+            commitAddNotification(context, loadingNotification);
+            const response = (await Promise.all([
+                api.updateAdvert(context.rootState.main.token, payload.id, payload.advert),
+                await new Promise((resolve, reject) => setTimeout(() => resolve(), 500)),
+            ]))[0];
+            commitSetAdvert(context, response.data);
+            commitRemoveNotification(context, loadingNotification);
+            commitAddNotification(context, { content: 'Advert successfully updated', color: 'success' });
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
+    async actionCreateAdvert(context: MainContext, payload: IAdvertCreate) {
+        try {
+            const loadingNotification = { content: 'saving', showProgress: true };
+            commitAddNotification(context, loadingNotification);
+            const response = (await Promise.all([
+                api.createAdvert(context.rootState.main.token, payload),
+                await new Promise((resolve, reject) => setTimeout(() => resolve(), 500)),
+            ]))[0];
+            commitSetAdvert(context, response.data);
+            commitRemoveNotification(context, loadingNotification);
+            commitAddNotification(context, { content: 'Advert successfully created', color: 'success' });
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
+    async actionGetUsers(context: MainContext) {
+        try {
+            const response = await api.getUsers(context.rootState.main.token);
+            if (response) {
+                commitSetUsers(context, response.data);
+            }
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
 };
 
 const { dispatch } = getStoreAccessors<MainState | any, State>('');
@@ -171,3 +224,10 @@ export const dispatchUpdateUserProfile = dispatch(actions.actionUpdateUserProfil
 export const dispatchRemoveNotification = dispatch(actions.removeNotification);
 export const dispatchPasswordRecovery = dispatch(actions.passwordRecovery);
 export const dispatchResetPassword = dispatch(actions.resetPassword);
+
+export const dispatchCreateAdvert = dispatch(actions.actionCreateAdvert);
+export const dispatchGetAdverts = dispatch(actions.actionGetAdverts);
+export const dispatchUpdateAdvert = dispatch(actions.actionUpdateAdvert);
+
+export const dispatchGetUsers = dispatch(actions.actionGetUsers);
+

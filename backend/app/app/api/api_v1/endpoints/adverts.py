@@ -19,13 +19,13 @@ def read_adverts(
     """
     Retrieve adverts.
     """
-    if crud.user.is_superuser(current_user):
-        adverts = crud.advert.get_multi(db, skip=skip, limit=limit)
-    else:
-        adverts = crud.advert.get_multi_by_owner(
-            db=db, owner_id=current_user.id, skip=skip, limit=limit
-        )
-    return adverts
+    # if crud.user.is_superuser(current_user):
+    #     adverts = crud.advert.get_multi(db, skip=skip, limit=limit)
+    # else:
+    #     adverts = crud.advert.get_multi_by_owner(
+    #         db=db, owner_id=current_user.id, skip=skip, limit=limit
+    #     )
+    return crud.advert.get_multi(db, skip=skip, limit=limit)
 
 
 @router.post("/", response_model=schemas.Advert)
@@ -75,8 +75,8 @@ def read_advert(
     advert = crud.advert.get(db=db, id=id)
     if not advert:
         raise HTTPException(status_code=404, detail="Advert not found")
-    if not crud.user.is_superuser(current_user) and (advert.owner_id != current_user.id):
-        raise HTTPException(status_code=400, detail="Not enough permissions")
+    # if not crud.user.is_superuser(current_user) and (advert.owner_id != current_user.id):
+    #     raise HTTPException(status_code=400, detail="Not enough permissions")
     return advert
 
 

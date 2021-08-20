@@ -5,6 +5,7 @@
         Adverts
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn color="primary" to="/main/adverts/create">Create Advert</v-btn>
     </v-toolbar>
     <v-text-field v-model="search" label="Search" class="mx-4"></v-text-field>
     <v-data-table :headers="headers" :items="adverts" :search="search">
@@ -14,7 +15,6 @@
         <td>{{ props.item.price }}</td>
         <td>{{ props.item.category }}</td>
         <td>{{ props.item.location }}</td>
-        <td>{{ props.item.rating }}</td>
         <td class="justify-center layout px-0">
           <v-tooltip top>
             <span>Info</span>
@@ -30,8 +30,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { readAdminAdverts } from '@/store/admin/getters';
-import { dispatchGetAdverts } from '@/store/admin/actions';
+import { readAdverts } from '@/store/main/getters';
+import { dispatchGetAdverts } from '@/store/main/actions';
+import { FB_ANALYTICS, FB_PERFORMANCE } from '@/firebase';
 
 @Component
 export default class Adverts extends Vue {
@@ -68,18 +69,12 @@ export default class Adverts extends Vue {
       align: 'left',
     },
     {
-      text: 'Rating',
-      sortable: true,
-      value: 'rating',
-      align: 'left',
-    },
-    {
       text: 'Actions',
       value: 'id',
     },
   ];
   get adverts() {
-    return readAdminAdverts(this.$store);
+    return readAdverts(this.$store);
   }
 
   public redirectToDetail() {
@@ -88,7 +83,11 @@ export default class Adverts extends Vue {
   }
 
   public async mounted() {
+    FB_ANALYTICS.logEvent('Adverts called');
+    const trace = FB_PERFORMANCE.trace('AdvertsTraced');
+    trace.start();
     await dispatchGetAdverts(this.$store);
+    trace.stop();
   }
 }
 </script>

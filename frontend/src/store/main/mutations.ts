@@ -1,7 +1,8 @@
-import { IUserProfile } from '@/interfaces';
+import {IAdvert, IUserProfile} from '@/interfaces';
 import { MainState, AppNotification } from './state';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { State } from '../state';
+import {AdminState} from "@/store/admin/state";
 
 
 export const mutations = {
@@ -29,6 +30,22 @@ export const mutations = {
     removeNotification(state: MainState, payload: AppNotification) {
         state.notifications = state.notifications.filter((notification) => notification !== payload);
     },
+    setAdverts(state: MainState, payload: IAdvert[]) {
+        state.adverts = payload;
+    },
+    setAdvert(state: MainState, payload: IAdvert) {
+        const adverts = state.adverts.filter((advert: IAdvert) => advert.id !== payload.id);
+        adverts.push(payload);
+        state.adverts = adverts;
+    },
+    setUsers(state: MainState, payload: IUserProfile[]) {
+        state.users = payload;
+    },
+    setUser(state: MainState, payload: IUserProfile) {
+        const users = state.users.filter((user: IUserProfile) => user.id !== payload.id);
+        users.push(payload);
+        state.users = users;
+    },
 };
 
 const {commit} = getStoreAccessors<MainState | any, State>('');
@@ -41,3 +58,9 @@ export const commitSetToken = commit(mutations.setToken);
 export const commitSetUserProfile = commit(mutations.setUserProfile);
 export const commitAddNotification = commit(mutations.addNotification);
 export const commitRemoveNotification = commit(mutations.removeNotification);
+
+export const commitSetAdvert = commit(mutations.setAdvert);
+export const commitSetAdverts = commit(mutations.setAdverts);
+
+export const commitSetUser = commit(mutations.setUser);
+export const commitSetUsers = commit(mutations.setUsers);
